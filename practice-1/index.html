@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A visual playground for JavaScript closures, promises, async/await, and the event loop."
+    />
+    <title>Async Lab</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%231b1b1b'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='monospace' font-size='30' fill='white'%3EJS%3C/text%3E%3C/svg%3E"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header" id="top">
+      <a class="brand" href="#top" aria-label="Async Lab home">
+        <span class="brand-symbol">JS</span>
+        <span>Async Lab</span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#tasks">Tasks</a>
+        <a href="#event-loop">Event loop</a>
+        <a href="README.md">README</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="intro" aria-labelledby="page-title">
+        <p class="label">Homework 01 · JavaScript Runtime and Async</p>
+        <div class="intro-grid">
+          <h1 id="page-title">Async JavaScript,<br />made visible.</h1>
+          <div class="intro-copy">
+            <p>
+              A small interactive lab for seeing what closures remember, how Promises
+              settle, and why microtasks run before timers.
+            </p>
+            <a href="#tasks">Start with the tasks ↓</a>
+          </div>
+        </div>
+
+        <dl class="concept-list">
+          <div>
+            <dt>Closure</dt>
+            <dd>Private state that survives after a function returns.</dd>
+          </div>
+          <div>
+            <dt>Promise</dt>
+            <dd>A value that will settle later: fulfilled or rejected.</dd>
+          </div>
+          <div>
+            <dt>Microtask</dt>
+            <dd>Promise callbacks and continuations after <code>await</code>.</dd>
+          </div>
+          <div>
+            <dt>Task</dt>
+            <dd>Timers, events, and other work handled on a later turn.</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section class="section" id="tasks" aria-labelledby="tasks-title">
+        <div class="section-header">
+          <span class="section-index">01</span>
+          <div>
+            <p class="label">Promises + closures</p>
+            <h2 id="tasks-title">Run simulated requests</h2>
+          </div>
+          <p class="section-note">
+            Every task keeps its own private counter, waits 500–2000 ms, and has a
+            25% chance to fail.
+          </p>
+        </div>
+
+        <div class="run-guide" aria-labelledby="run-guide-title">
+          <div class="guide-heading">
+            <span class="guide-number">1</span>
+            <div>
+              <strong id="run-guide-title">Choose how to start</strong>
+              <small>Both modes run the same three tasks. Only the start order changes.</small>
+            </div>
+          </div>
+
+          <div class="mode-options">
+            <button class="mode-option" id="run-sequential" type="button">
+              <span class="mode-copy">
+                <strong>Run one by one</strong>
+                <small>Task 2 waits for task 1; task 3 waits for task 2.</small>
+              </span>
+              <span class="mode-diagram sequential-diagram" aria-hidden="true">
+                <i>1</i><b>→</b><i>2</i><b>→</b><i>3</i>
+              </span>
+            </button>
+
+            <button class="mode-option mode-option-primary" id="run-all" type="button">
+              <span class="mode-copy">
+                <strong>Run all together</strong>
+                <small>All three timers start now; the slowest one sets the total time.</small>
+              </span>
+              <span class="mode-diagram concurrent-diagram" aria-hidden="true">
+                <b>start</b><span><i>1</i><i>2</i><i>3</i></span>
+              </span>
+            </button>
+          </div>
+
+          <div class="control-message">
+            <span class="activity-dot" aria-hidden="true"></span>
+            <div>
+              <p id="batch-message" role="status">Nothing is running.</p>
+              <small id="batch-explanation">
+                Choose a mode above, or run only one task using its own button.
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="state-guide" aria-label="Task status lifecycle">
+          <span><b>2</b> Watch each request</span>
+          <div class="state-path">
+            <i class="state-idle">Idle</i><b>→</b>
+            <i class="state-loading">Loading</i><b>→</b>
+            <span><i class="state-completed">Completed</i><em>or</em><i class="state-failed">Failed</i></span>
+          </div>
+        </div>
+
+        <div class="task-grid" id="task-grid" aria-live="polite"></div>
+
+        <article class="comparison-card" aria-labelledby="comparison-title">
+          <div class="comparison-copy">
+            <p class="label">3 · Explain the time difference</p>
+            <h3 id="comparison-title">Sequential vs concurrent</h3>
+            <p>
+              The comparison repeats the same three loading times, first one by one,
+              then all at once.
+            </p>
+            <button class="button button-primary" id="compare-modes" type="button">
+              Compare both modes
+            </button>
+            <small class="button-hint">Runs twice and takes approximately 4–8 seconds.</small>
+          </div>
+
+          <div class="comparison-visual" id="metrics">
+            <div class="formula-row" aria-label="Timing formulas">
+              <code>A + B + C</code>
+              <span>versus</span>
+              <code>max(A, B, C)</code>
+            </div>
+
+            <div class="metric">
+              <div class="metric-topline">
+                <span><i class="legend legend-sequential"></i>Sequential</span>
+                <strong id="sequential-time">—</strong>
+              </div>
+              <div class="meter"><span id="sequential-meter"></span></div>
+              <small>Each task starts after the previous task settles.</small>
+            </div>
+
+            <div class="metric">
+              <div class="metric-topline">
+                <span><i class="legend legend-concurrent"></i>Concurrent</span>
+                <strong id="concurrent-time">—</strong>
+              </div>
+              <div class="meter meter-accent"><span id="concurrent-meter"></span></div>
+              <small>All tasks start during the same turn.</small>
+            </div>
+
+            <p class="metric-explanation" id="comparison-explanation">
+              Run the comparison to measure the difference on this page.
+            </p>
+          </div>
+        </article>
+      </section>
+
+      <section class="section event-section" id="event-loop" aria-labelledby="event-title">
+        <div class="section-header">
+          <span class="section-index">02</span>
+          <div>
+            <p class="label">Execution order</p>
+            <h2 id="event-title">Follow the event loop</h2>
+          </div>
+          <p class="section-note">
+            The stack finishes first. JavaScript then drains every microtask before
+            taking the next timer from the task queue.
+          </p>
+        </div>
+
+        <div class="event-actions">
+          <div class="event-instruction">
+            <span class="guide-number">1</span>
+            <div>
+              <strong>Run the example</strong>
+              <p id="event-explanation">
+                The code logs eight messages. The result appears in “Actual output”.
+              </p>
+            </div>
+          </div>
+          <button class="button button-primary" id="run-event-loop" type="button">
+            Play execution order
+          </button>
+        </div>
+
+        <div class="execution-map" id="execution-map" aria-label="Event loop flow">
+          <div class="flow-step active" data-flow="stack">
+            <span>1</span>
+            <strong>Call Stack</strong>
+            <small>Synchronous code</small>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-step" data-flow="microtask">
+            <span>2</span>
+            <strong>Microtask Queue</strong>
+            <small>Promise · await</small>
+          </div>
+          <span class="flow-arrow" aria-hidden="true">→</span>
+          <div class="flow-step" data-flow="task">
+            <span>3</span>
+            <strong>Task Queue</strong>
+            <small>setTimeout</small>
+          </div>
+          <span class="flow-arrow loop-arrow" aria-hidden="true">↺</span>
+        </div>
+
+        <div class="phase-legend" aria-label="Output color legend">
+          <span><i class="phase-stack"></i><b>Sync</b> runs immediately</span>
+          <span><i class="phase-microtask"></i><b>Microtask</b> runs after the stack</span>
+          <span><i class="phase-task"></i><b>Timer</b> runs after all microtasks</span>
+        </div>
+
+        <div class="output-grid">
+          <article class="output-card">
+            <header>
+              <span>Prediction</span>
+              <small>Written before execution</small>
+            </header>
+            <ol class="console-output expected-output">
+              <li data-phase="stack">script start</li>
+              <li data-phase="stack">async function start</li>
+              <li data-phase="stack">script end</li>
+              <li data-phase="microtask">promise callback A</li>
+              <li data-phase="microtask">async after await</li>
+              <li data-phase="microtask">promise callback B</li>
+              <li data-phase="task">timer A</li>
+              <li data-phase="task">timer B</li>
+            </ol>
+          </article>
+
+          <article class="output-card actual-card">
+            <header>
+              <span>Actual output</span>
+              <small>Captured from this run</small>
+            </header>
+            <ol class="console-output" id="actual-output">
+              <li class="placeholder">Nothing has run yet.</li>
+            </ol>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Built with HTML, CSS, and vanilla JavaScript.</span>
+      <a href="#top">Back to top ↑</a>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>
