@@ -1,0 +1,32 @@
+.title {
+  font-size: 47px;
+  letter-spacing: -2.5px;
+  line-height: 1.1;
+}
+.description {
+  font-size: 13px;
+  color: var(--color-muted);
+  margin-top: 17px;
+}
+.links {
+  display: flex;
+  gap: 26px;
+  margin-top: 27px;
+}
+.links a {
+  color: var(--color-accent);
+}
+.links a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+.address {
+  color: var(--color-muted);
+  font: 10px var(--font-mono);
+  margin-top: 40px;
+}
+@media (max-width: 600px) {
+  .title {
+    font-size: 40px;
+  }
+}

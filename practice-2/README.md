@@ -22,16 +22,34 @@ npm run build
 npm run preview
 ```
 
-## React components
+## Architecture: Feature-Sliced Design
 
-`src/App.jsx` contains Header, Hero, About, Experience, ExperienceCard, TechStack,
-Beyond, Contact, Footer, plus reusable ExternalLink and SectionLabel components.
-Career information and skill groups live in `src/data.js`.
+```text
+src/
+  app/                         # App entry, global reset and design tokens
+  pages/home/                  # Page composition
+  widgets/                     # Intro, about, experience, stack, background, contact, layout
+  features/experience-details/ # View/hide professional contributions
+  entities/
+    profile/                   # Public profile, links, skill groups
+    experience/                # Career data and ExperienceRow presentation
+  shared/ui/                   # TextLink, Section, InlineList, Disclosure
+```
 
-- `useState`: mobile navigation and expandable experience cards.
-- `useEffect` / IntersectionObserver: active section in navigation.
-- Responsive CSS, keyboard focus styles, a skip link, reduced-motion support.
-- Contact section contains only public GitHub and LinkedIn links and a playful address.
+- Layers import only lower layers; slices on the same layer stay independent.
+- Each slice exposes a public API through `index.js`.
+- `@/` points to `src/` (configured in Vite and `jsconfig.json`).
+- Every styled component has its own `*.module.css`; only reset, typography,
+  and design tokens are global in `app/styles/`.
+- `ExperienceRow` accepts children as a slot. The widget composes the entity
+  with the feature, so the entity never imports the feature above it.
+- Shared UI is domain-independent and reused across widgets and features.
+- `npm run lint` runs Oxlint and a static FSD import-boundary check.
+
+The interface uses a white background, black typography, a single blue accent,
+a monochrome portrait, and thin separators. Layouts adapt to small screens.
+Disclosure controls support keyboard interaction and expose expanded state.
+The page also includes a skip link, visible focus styles, and reduced-motion support.
 
 ## Sources
 

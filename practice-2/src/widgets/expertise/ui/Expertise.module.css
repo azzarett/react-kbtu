@@ -1,0 +1,23 @@
+.groups {
+  margin: 0;
+}
+.group {
+  display: grid;
+  grid-template-columns: 100px minmax(0, 1fr);
+  gap: 20px;
+}
+.group + .group {
+  margin-top: 20px;
+}
+.group dt {
+  font-size: 12px;
+}
+.group dd {
+  margin: 0;
+}
+@media (max-width: 600px) {
+  .group {
+    grid-template-columns: 75px minmax(0, 1fr);
+    gap: 15px;
+  }
+}

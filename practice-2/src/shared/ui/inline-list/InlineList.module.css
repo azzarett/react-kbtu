@@ -1,0 +1,16 @@
+.list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 0;
+  padding: 0;
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.list > li:not(:last-child)::after {
+  content: "/";
+  padding: 0 10px;
+  color: #c2c2c2;
+}

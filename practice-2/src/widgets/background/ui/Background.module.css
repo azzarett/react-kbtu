@@ -1,0 +1,48 @@
+.heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+}
+.heading h3 {
+  font-size: 20px;
+  letter-spacing: -0.6px;
+}
+.heading > span {
+  font: 10px var(--font-mono);
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+.subtitle {
+  font-size: 12px;
+  margin-top: 5px;
+}
+.description {
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.9;
+  margin: 17px 0 18px;
+}
+.block > a {
+  font-size: 12px;
+}
+.education {
+  border-top: 1px solid var(--color-line);
+  padding-top: 29px;
+  margin-top: 34px;
+}
+.education > h3 {
+  font: 10px var(--font-mono);
+  color: var(--color-muted);
+  margin-bottom: 20px;
+}
+.education > div + div {
+  margin-top: 20px;
+}
+.education p {
+  font-size: 13px;
+}
+.education span {
+  font-size: 11px;
+  color: var(--color-muted);
+}

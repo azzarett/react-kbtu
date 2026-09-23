@@ -1,0 +1,15 @@
+.link {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  width: fit-content;
+  font-size: 13px;
+  line-height: 1.6;
+  transition: color 150ms ease;
+}
+.link:hover {
+  color: var(--color-accent);
+}
+.link > svg {
+  flex: 0 0 auto;
+}

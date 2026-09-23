@@ -1,0 +1,22 @@
+.page {
+  max-width: var(--layout-width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+.skipLink {
+  position: fixed;
+  top: -80px;
+  left: 20px;
+  z-index: 30;
+  background: var(--color-text);
+  color: white;
+  padding: 10px 20px;
+}
+.skipLink:focus {
+  top: 12px;
+}
+@media (max-width: 600px) {
+  .page {
+    padding: 0 24px;
+  }
+}

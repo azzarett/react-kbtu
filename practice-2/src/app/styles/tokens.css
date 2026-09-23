@@ -1,0 +1,13 @@
+:root {
+  --color-background: #fff;
+  --color-text: #1c1c1c;
+  --color-muted: #676767;
+  --color-faint: #838383;
+  --color-line: #e6e6e6;
+  --color-accent: #2454d6;
+  --font-body:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --layout-width: 1080px;
+  --layout-label: 218px;
+}

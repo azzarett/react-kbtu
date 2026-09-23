@@ -1,0 +1,37 @@
+.section {
+  display: grid;
+  grid-template-columns: var(--layout-label) minmax(0, 1fr);
+  gap: 24px;
+  padding: 60px 0;
+  border-top: 1px solid var(--color-line);
+}
+.label {
+  display: flex;
+  align-items: baseline;
+  gap: 13px;
+  padding-top: 3px;
+}
+.label > span {
+  font: 10px var(--font-mono);
+  color: var(--color-faint);
+}
+.label > h2 {
+  font-size: 13px;
+  font-weight: 500;
+}
+.content {
+  min-width: 0;
+}
+@media (max-width: 800px) {
+  .section {
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+@media (max-width: 600px) {
+  .section {
+    grid-template-columns: 1fr;
+    gap: 27px;
+    padding: 38px 0;
+  }
+}

@@ -1,0 +1,13 @@
+.list {
+  padding: 0 0 0 17px;
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: var(--color-muted);
+  line-height: 1.85;
+}
+.list > li + li {
+  margin-top: 7px;
+}
+.list > li::marker {
+  color: #aaa;
+}
