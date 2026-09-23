@@ -1,0 +1,63 @@
+name: Deploy React portfolio to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'practice-2/**'
+      - 'practice-1/**'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+          cache-dependency-path: practice-2/package-lock.json
+      - name: Install
+        working-directory: practice-2
+        run: npm ci
+      - name: Lint
+        working-directory: practice-2
+        run: npm run lint
+      - name: Build
+        working-directory: practice-2
+        run: npm run build
+      - name: Assemble Pages site
+        run: |
+          mkdir -p _site/practice-2
+          cp -R practice-2/dist/. _site/practice-2/
+          cp -R practice-1 _site/practice-1
+          printf '<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./practice-2/"><title>Azat Bertayev</title><a href="./practice-2/">Open portfolio</a></html>\n' > _site/index.html
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy
+        id: deployment
+        uses: actions/deploy-pages@v4
