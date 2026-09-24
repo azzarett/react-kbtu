@@ -22,29 +22,53 @@ npm run build
 npm run preview
 ```
 
-## Architecture: Feature-Sliced Design
+## Architecture: common + features
+
+The structure follows the same principles as `aurora-client`, scaled to a single
+portfolio screen. The app remains React + Vite with JavaScript.
 
 ```text
 src/
-  app/                         # App entry, global reset and design tokens
-  pages/home/                  # Page composition
-  widgets/                     # Intro, about, experience, stack, background, contact, layout
-  features/experience-details/ # View/hide professional contributions
-  entities/
-    profile/                   # Public profile, links, skill groups
-    experience/                # Career data and ExperienceRow presentation
-  shared/ui/                   # TextLink, Section, InlineList, Disclosure
+  main.jsx
+  App.jsx                          # Application composition
+  common/
+    components/ui/                 # Disclosure, InlineList, Section, TextLink
+      text-link/
+        index.js
+        text-link.jsx
+        text-link.module.css
+    styles/                        # Global base styles and design tokens
+  features/
+    portfolio/
+      portfolio-view.jsx           # Thin screen composition
+      portfolio-view.module.css
+      constants/                   # Profile, links, skills, career data
+      components/                  # Portfolio-specific sections and layout
+        intro/
+          intro.jsx
+          intro.module.css
+        experience/
+          experience.jsx
+        experience-row/
+          experience-row.jsx
+          experience-row.module.css
+        experience-details/
+          experience-details.jsx
+          experience-details.module.css
 ```
 
-- Layers import only lower layers; slices on the same layer stay independent.
-- Each slice exposes a public API through `index.js`.
-- `@/` points to `src/` (configured in Vite and `jsconfig.json`).
-- Every styled component has its own `*.module.css`; only reset, typography,
-  and design tokens are global in `app/styles/`.
-- `ExperienceRow` accepts children as a slot. The widget composes the entity
-  with the feature, so the entity never imports the feature above it.
-- Shared UI is domain-independent and reused across widgets and features.
-- `npm run lint` runs Oxlint and a static FSD import-boundary check.
+- `App` assembles the screen; `portfolio-view` composes its sections.
+- Domain-specific content stays inside `features/portfolio`.
+- `common` contains domain-independent UI primitives and application infrastructure.
+- Dependencies point from the app to features/common and from features to common.
+  Common code cannot import features, and features cannot import other features.
+- Local imports are relative; `@/` points to `src/` for shared/app-level imports.
+- Component files use kebab-case, with colocated `*.module.css` styles.
+  Only reset, typography, and design tokens are global in `common/styles/`.
+- Simple disclosure state stays in its component. Add feature hooks for actual
+  screen logic when needed; this static SPA needs no router, API layer, or store.
+- There is no Tailwind or UI component library. `lucide-react` supplies icons only.
+- `npm run lint` runs Oxlint and checks the common/features dependency boundaries.
 
 The interface uses a white background, black typography, a single blue accent,
 a monochrome portrait, and thin separators. Layouts adapt to small screens.

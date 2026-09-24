@@ -2,7 +2,6 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, relative, resolve } from "node:path";
 
 const root = resolve("src");
-const layers = ["shared", "entities", "features", "widgets", "pages", "app"];
 const errors = [];
 
 async function* walk(directory) {
@@ -13,11 +12,10 @@ async function* walk(directory) {
   }
 }
 
-// Checks static imports and re-exports used by this project. Package imports
-// and the main.jsx entry point are outside the FSD layer graph.
+// Check local static imports and re-exports. App entry files may compose
+// features and common; common stays independent and features stay isolated.
 for await (const file of walk(root)) {
   const source = relative(root, file).split("/");
-  if (!layers.includes(source[0])) continue;
   const text = await readFile(file, "utf8");
   const imports = text.matchAll(/(?:\bfrom\s*|\bimport\s*)['"]([^'"]+)['"]/g);
   for (const [, specifier] of imports) {
@@ -26,25 +24,16 @@ for await (const file of walk(root)) {
       ? resolve(root, specifier.slice(2))
       : resolve(dirname(file), specifier);
     const target = relative(root, targetPath).split("/");
-    const fromLayer = layers.indexOf(source[0]);
-    const toLayer = layers.indexOf(target[0]);
-    const sameSlice = source[0] === target[0] && source[1] === target[1];
-    const unsegmentedLayer = ["app", "shared"].includes(source[0]);
     const report = (reason) =>
       errors.push(`${relative(root, file)} → ${specifier}: ${reason}`);
 
-    if (toLayer < 0) report("target must be inside an FSD layer");
-    else if (toLayer > fromLayer)
-      report("imports may only point to lower layers");
-    else if (toLayer === fromLayer && !sameSlice && !unsegmentedLayer)
-      report("sibling slices must not import one another");
-    else if (toLayer < fromLayer) {
-      const publicDepth = target[0] === "shared" ? 3 : 2;
-      const isPublicApi =
-        target.length === publicDepth ||
-        (target.length === publicDepth + 1 &&
-          /^index\.(js|jsx)$/.test(target.at(-1)));
-      if (!isPublicApi) report("use the slice public API (index.js)");
+    if (source[0] === "common" && target[0] !== "common")
+      report("common must not depend on features or app entry files");
+    if (source[0] === "features") {
+      if (!["common", "features"].includes(target[0]))
+        report("features must not depend on app entry files");
+      else if (target[0] === "features" && source[1] !== target[1])
+        report("features must not import other features");
     }
   }
 }
@@ -53,5 +42,5 @@ if (errors.length) {
   console.error(errors.join("\n"));
   process.exitCode = 1;
 } else {
-  console.log("FSD import boundaries: OK");
+  console.log("Common/features import boundaries: OK");
 }
