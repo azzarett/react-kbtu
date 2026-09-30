@@ -1,0 +1,66 @@
+.siteHeader {
+  height: 104px;
+  border-bottom: 1px solid var(--color-line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.wordmark {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -1.2px;
+  text-decoration: none;
+}
+.wordmark svg {
+  color: var(--color-accent);
+  margin-right: 2px;
+}
+.wordmarkDot {
+  color: var(--color-accent);
+  margin-left: -9px;
+}
+.headerCaption {
+  color: var(--color-muted);
+  font-size: 12px;
+}
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 27px 0 35px;
+  color: var(--color-muted);
+  font-size: 10px;
+}
+.footer > span:first-child {
+  font-family: var(--font-heading);
+  font-size: 12px;
+}
+@media (max-width: 760px) {
+  .siteHeader {
+    height: 80px;
+  }
+  .headerCaption {
+    font-size: 10px;
+  }
+}
+@media (max-width: 540px) {
+  .siteHeader {
+    height: 72px;
+  }
+  .wordmark {
+    font-size: 25px;
+  }
+  .headerCaption {
+    max-width: 90px;
+    text-align: right;
+    line-height: 1.5;
+  }
+  .footer {
+    flex-direction: column;
+    gap: 7px;
+    padding: 24px 0;
+  }
+}

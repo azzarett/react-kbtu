@@ -1,0 +1,9 @@
+:root {
+  --color-background: #f7f6f2;
+  --color-text: #292d27;
+  --color-muted: #72756b;
+  --color-line: #dddfd5;
+  --color-accent: #405744;
+  --font-body: "Golos Text", sans-serif;
+  --font-heading: "Lora", Georgia, serif;
+}
