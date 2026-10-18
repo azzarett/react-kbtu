@@ -1,0 +1,8 @@
+.header { display: flex; align-items: center; justify-content: space-between; min-height: 94px; gap: 16px; border-bottom: 1px solid var(--color-line); }
+.brand { border: 0; background: transparent; padding: 0; display: flex; align-items: center; color: var(--color-text); font-size: 35px; font-weight: 800; letter-spacing: -2px; }
+.mark { font-size: 33px; margin-right: 12px; letter-spacing: 0; }
+.dot { color: #b48648; }
+.header nav { display: flex; align-items: center; gap: 32px; }
+.catalog { padding: 12px 0; border: 0; background: transparent; color: var(--color-muted); }
+.catalog[aria-current] { color: var(--color-accent); box-shadow: 0 2px var(--color-accent); }
+@media (max-width: 550px) { .header { min-height: 84px; } .brand { font-size: 29px; } .header nav { gap: 10px; } .catalog { display: none; } }

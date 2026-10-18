@@ -1,0 +1,6 @@
+.feedback { padding: 48px 24px; border: 1px dashed var(--color-line); border-radius: 12px; text-align: center; display: grid; justify-items: center; gap: 16px; }
+.feedback h2 { font-family: var(--font-heading); font-size: 26px; }
+.feedback p { max-width: 520px; color: var(--color-muted); }
+.error { background: #fff5ef; border-color: #dfbcb0; }
+.spinner { width: 26px; height: 26px; border: 2px solid var(--color-line); border-top-color: var(--color-accent); border-radius: 50%; animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

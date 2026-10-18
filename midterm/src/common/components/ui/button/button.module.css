@@ -1,0 +1,9 @@
+.button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 44px; padding: 10px 19px; border: 1px solid transparent; border-radius: 7px; font-weight: 600; font-size: 14px; transition: background .15s, transform .15s; }
+.button:hover:not(:disabled) { transform: translateY(-1px); }
+.button:disabled { opacity: .5; }
+.primary { background: var(--color-accent); color: #fff; }
+.primary:hover:not(:disabled) { background: #264c37; }
+.secondary { background: transparent; border-color: var(--color-line); color: var(--color-text); }
+.secondary:hover:not(:disabled) { background: var(--color-soft); }
+.ghost { background: transparent; color: var(--color-accent); }
+.ghost:hover:not(:disabled) { background: var(--color-soft); }

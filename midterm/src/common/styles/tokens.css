@@ -1,0 +1,12 @@
+:root {
+  --color-background: #f5f5ee;
+  --color-surface: #fffffa;
+  --color-text: #263b30;
+  --color-muted: #687368;
+  --color-line: #dcded1;
+  --color-accent: #345e47;
+  --color-soft: #e7ebdd;
+  --color-danger: #a13b30;
+  --font-body: 'Avenir Next', 'Segoe UI', sans-serif;
+  --font-heading: 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+}

@@ -1,0 +1,22 @@
+.hero { display: grid; grid-template-columns: 1.05fr 1fr; gap: 45px; padding: 48px 0 46px; align-items: center; }
+.eyebrow { display: flex; gap: 9px; align-items: center; font-size: 10px; font-weight: 600; letter-spacing: 1.9px; margin-bottom: 22px; }
+.eyebrow > span { width: 7px; height: 7px; background: #7f915f; border-radius: 50%; flex-shrink: 0; }
+.copy h1 { font-family: var(--font-heading); font-size: clamp(32px, 3.7vw, 52px); font-weight: 500; letter-spacing: -1.6px; line-height: 1.12; }
+.copy h1 em { color: #7b8965; font-weight: 400; }
+.intro { max-width: 410px; margin-top: 22px; color: var(--color-muted); font-size: 14px; }
+.signature { display: flex; align-items: center; gap: 10px; font-size: 11px; margin-top: 28px; color: var(--color-muted); }
+.signature > span { color: #8c9d6b; font-size: 26px; }
+.feature, .art { position: relative; height: 300px; border-radius: 14px; overflow: hidden; border: 0; padding: 0; text-align: left; }
+.feature::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 30%, #122c22d9); }
+.feature img { transition: transform .4s; }
+.feature:hover img { transform: scale(1.035); }
+.caption { position: absolute; bottom: 25px; left: 28px; right: 55px; color: white; z-index: 1; display: grid; gap: 8px; }
+.caption span:first-child { font-size: 9px; letter-spacing: 2px; color: #e6e9cf; }
+.caption strong { font-family: var(--font-heading); font-size: 27px; font-weight: 500; }
+.caption span:last-child { font-size: 11px; color: #e0e7dc; }
+.arrow { position: absolute; right: 22px; bottom: 28px; z-index: 1; color: #fff; font-size: 24px; }
+.art { background: #dce4d3; display: flex; align-items: center; justify-content: center; gap: 35px; }
+.art > span { font-size: 120px; color: #78916e; }
+.art p { font-size: 11px; letter-spacing: 3px; line-height: 2.5; }
+@media (max-width: 800px) { .hero { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; } .copy h1 { font-size: 43px; } .intro { max-width: 540px; } .signature { margin-top: 16px; } .feature, .art { height: 240px; } }
+@media (max-width: 400px) { .copy h1 { font-size: 35px; } .eyebrow { font-size: 8px; letter-spacing: 1.2px; } }

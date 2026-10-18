@@ -1,0 +1,17 @@
+.shell { max-width: 1184px; padding: 0 40px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+.shell main { flex: 1; padding-bottom: 30px; }
+.heading { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 6px 0 23px; }
+.eyebrow { display: block; color: var(--color-muted); font-size: 9px; letter-spacing: 1.8px; margin-bottom: 10px; }
+.heading h2 { font: 500 29px var(--font-heading); display: flex; align-items: center; gap: 13px; }
+.heading h2 > span { font: 12px var(--font-body); background: var(--color-soft); padding: 5px 9px; border-radius: 5px; }
+.results { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding: 4px 0 22px; }
+.results > p { font-size: 11px; color: var(--color-muted); }
+.results label { display: flex; align-items: center; gap: 12px; font-size: 11px; color: var(--color-muted); }
+.results select { width: auto; background: transparent; padding: 7px 28px 7px 8px; border: 0; font-size: 12px; }
+.notice { margin-top: 20px; padding: 12px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; background: #e2ebd7; border: 1px solid #bdcfae; border-radius: 8px; font-size: 13px; }
+.notice button { border: 0; color: inherit; background: transparent; min-width: 40px; min-height: 40px; font-size: 24px; }
+.warning { padding: 12px; margin-top: 20px; color: var(--color-danger); border: 1px solid #dfbcb0; border-radius: 7px; font-size: 12px; }
+.footer { border-top: 1px solid var(--color-line); padding: 25px 0; display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--color-muted); font-size: 10px; }
+.footer strong { color: var(--color-text); font-size: 18px; margin-right: 10px; letter-spacing: -.5px; }
+.footer > span:last-child { font-size: 9px; letter-spacing: 1.3px; }
+@media (max-width: 650px) { .shell { padding: 0 20px; } .footer { flex-wrap: wrap; gap: 12px; } .heading h2 { font-size: 24px; gap: 8px; } .heading > button { padding-inline: 6px; font-size: 12px; } .results label > span { display: none; } }

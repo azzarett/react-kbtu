@@ -1,0 +1,6 @@
+.image { width: 100%; height: 100%; object-fit: cover; }
+.fallback { width: 100%; height: 100%; background: radial-gradient(ellipse at 30% 0%, #698363, #203d32); color: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px; padding: 24px; text-align: center; font-family: var(--font-heading); font-size: 24px; }
+.fallback > span:first-child { font: 64px/1 var(--font-heading); color: #d7cfa4; }
+.fallback small { font: 9px var(--font-body); letter-spacing: 2px; }
+.fallback > span:nth-child(2) { overflow: hidden; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+@media (max-width: 600px) { .fallback { gap: 12px; padding: 30px 14px; font-size: 20px; } .fallback > span:first-child { font-size: 40px; } .fallback small { display: none; } }
