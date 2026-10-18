@@ -20,3 +20,6 @@
 .art p { font-size: 11px; letter-spacing: 3px; line-height: 2.5; }
 @media (max-width: 800px) { .hero { grid-template-columns: 1fr; gap: 28px; padding: 32px 0; } .copy h1 { font-size: 43px; } .intro { max-width: 540px; } .signature { margin-top: 16px; } .feature, .art { height: 240px; } }
 @media (max-width: 400px) { .copy h1 { font-size: 35px; } .eyebrow { font-size: 8px; letter-spacing: 1.2px; } }
+
+.banner > span:nth-child(2), .banner > small { display: none; }
+.banner > span:first-child { transform: translateY(-30px); }
