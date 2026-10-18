@@ -7,6 +7,7 @@ on:
       - 'practice-2/**'
       - 'practice-1/**'
       - 'practice-3/**'
+      - 'practice-4/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 
@@ -33,6 +34,7 @@ jobs:
           cache-dependency-path: |
             practice-2/package-lock.json
             practice-3/package-lock.json
+            practice-4/package-lock.json
       - name: Install
         working-directory: practice-2
         run: npm ci
@@ -51,11 +53,24 @@ jobs:
       - name: Build practice 3
         working-directory: practice-3
         run: npm run build
+      - name: Install practice 4
+        working-directory: practice-4
+        run: npm ci
+      - name: Lint practice 4
+        working-directory: practice-4
+        run: npm run lint
+      - name: Test practice 4
+        working-directory: practice-4
+        run: npm test
+      - name: Build practice 4
+        working-directory: practice-4
+        run: npm run build
       - name: Assemble Pages site
         run: |
-          mkdir -p _site/practice-2 _site/practice-3
+          mkdir -p _site/practice-2 _site/practice-3 _site/practice-4
           cp -R practice-2/dist/. _site/practice-2/
           cp -R practice-3/dist/. _site/practice-3/
+          cp -R practice-4/dist/. _site/practice-4/
           cp -R practice-1 _site/practice-1
           printf '<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./practice-2/"><title>Azat Bertayev</title><a href="./practice-2/">Open portfolio</a></html>\n' > _site/index.html
       - name: Configure Pages
