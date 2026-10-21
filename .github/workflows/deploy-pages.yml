@@ -1,4 +1,4 @@
-name: Deploy practices and modterm to GitHub Pages
+name: Deploy midterm to GitHub Pages
 
 on:
   push:
@@ -87,7 +87,7 @@ jobs:
           cp -R practice-3/dist/. _site/practice-3/
           cp -R practice-4/dist/. _site/practice-4/
           cp -R practice-1 _site/practice-1
-          printf '<!doctype html><html lang="en"><meta charset="utf-8"><meta http-equiv="refresh" content="0;url=./practice-2/"><title>Azat Bertayev</title><a href="./practice-2/">Open portfolio</a></html>\n' > _site/index.html
+          cp -R midterm/dist/. _site/
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload site
