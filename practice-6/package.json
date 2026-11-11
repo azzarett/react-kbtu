@@ -1,0 +1,36 @@
+{
+  "name": "practice-6",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint src --react-plugin --deny react/exhaustive-deps --deny react/rules-of-hooks && node scripts/check-architecture.mjs",
+    "preview": "vite preview",
+    "test": "node --test tests/*.test.js",
+    "test:ui": "vitest run",
+    "check": "npm run lint && npm test && npm run test:ui && npm run build"
+  },
+  "dependencies": {
+    "firebase": "^13.2.0",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router": "^7.18.5"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.8",
+    "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.3",
+    "oxlint": "^1.81.0",
+    "vite": "^8.3.0",
+    "vitest": "^5.1.0"
+  },
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26.0.0"
+  },
+  "overrides": {
+    "@grpc/grpc-js": "1.14.7"
+  }
+}
