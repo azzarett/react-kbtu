@@ -1,0 +1,9 @@
+.nav { display:flex; gap:20px; align-items:center; flex-wrap:wrap; }
+.nav a { text-decoration:none; color:var(--color-muted); font-size:12px; padding:10px 0; border-bottom:2px solid transparent; }
+.nav a[aria-current="page"] { color:var(--color-accent); border-bottom-color:var(--color-accent); font-weight:600; }
+@media(max-width:800px) { .nav { gap:14px; } }
+@media(max-width:620px) { .nav { gap:8px 16px; width:100%; } .nav a { padding:6px 0; } }
+
+.nav button { background:transparent; border:0; color:var(--color-accent); font:inherit; font-size:12px; cursor:pointer; padding:10px 0; }
+.nav button:disabled { opacity:.6; cursor:wait; }
+.nav [role="status"] { color:var(--color-danger); font-size:12px; max-width:250px; }
