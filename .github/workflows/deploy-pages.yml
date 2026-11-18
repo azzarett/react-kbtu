@@ -8,6 +8,7 @@ on:
       - 'practice-1/**'
       - 'practice-3/**'
       - 'practice-4/**'
+      - 'practice-7/**'
       - 'midterm/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
@@ -23,10 +24,25 @@ concurrency:
 
 jobs:
   build:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Expand verified Task 7 source once
+        if: hashFiles('practice-7-source.zip') != ''
+        run: |
+          python - <<'PYTHON'
+          import zipfile, pathlib
+          with zipfile.ZipFile('practice-7-source.zip') as z:
+            for info in z.infolist():
+              p = pathlib.PurePosixPath(info.filename)
+              assert p.parts[0] == 'practice-7' and '..' not in p.parts and not p.is_absolute()
+              assert not any(part in ('node_modules', '.git', 'dist') for part in p.parts)
+              assert not (p.name.startswith('.env') and p.name != '.env.example')
+            z.extractall('.')
+          PYTHON
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -36,6 +52,7 @@ jobs:
             practice-2/package-lock.json
             practice-3/package-lock.json
             practice-4/package-lock.json
+            practice-7/package-lock.json
             midterm/package-lock.json
       - name: Install
         working-directory: practice-2
@@ -79,13 +96,29 @@ jobs:
       - name: Build midterm
         working-directory: midterm
         run: npm run build
+      - name: Install practice 7
+        working-directory: practice-7
+        run: npm ci
+      - name: Verify and build practice 7
+        working-directory: practice-7
+        run: npm run check
+      - name: Commit expanded Task 7 source
+        if: hashFiles('practice-7-source.zip') != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- practice-7
+          git rm -- practice-7-source.zip
+          git commit -m "feat: publish verified Task 7 PWA source"
+          git push origin HEAD:main
       - name: Assemble Pages site
         run: |
-          mkdir -p _site/practice-2 _site/practice-3 _site/practice-4 _site/modterm
+          mkdir -p _site/practice-7 _site/practice-2 _site/practice-3 _site/practice-4 _site/modterm
           cp -R midterm/dist/. _site/modterm/
           cp -R practice-2/dist/. _site/practice-2/
           cp -R practice-3/dist/. _site/practice-3/
           cp -R practice-4/dist/. _site/practice-4/
+          cp -R practice-7/dist/. _site/practice-7/
           cp -R practice-1 _site/practice-1
           cp -R midterm/dist/. _site/
       - name: Configure Pages
