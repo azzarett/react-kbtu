@@ -1,0 +1,10 @@
+.page { padding:52px 0 16px; }
+.eyebrow { color:var(--color-accent); font-size:10px; letter-spacing:1.7px; margin-bottom:16px; }
+.page h1 { font:400 clamp(34px,4vw,48px)/1.15 var(--font-heading); }
+.lead { color:var(--color-muted); max-width:580px; line-height:1.8; margin-top:20px; }
+.sections { display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:36px; }
+.sections section { background:var(--color-surface); border:1px solid var(--color-line); border-radius:8px; padding:28px; }
+.sections h2 { font:400 25px var(--font-heading); margin-bottom:16px; }
+.sections p { line-height:1.85; color:var(--color-muted); font-size:13px; }
+.sections a { display:inline-block; margin-top:24px; font-size:12px; color:var(--color-accent); }
+@media(max-width:620px) { .page { padding-top:34px; } .sections { grid-template-columns:1fr; gap:16px; } .sections section { padding:22px; } }

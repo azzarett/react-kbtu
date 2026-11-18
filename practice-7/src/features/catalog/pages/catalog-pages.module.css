@@ -1,0 +1,44 @@
+.page { padding:48px 0 10px; }
+.eyebrow { color:var(--color-accent); font-size:10px; letter-spacing:1.7px; font-weight:600; margin-bottom:14px; }
+.page h1 { font:400 clamp(32px,4vw,46px)/1.15 var(--font-heading); letter-spacing:-1px; overflow-wrap:anywhere; }
+.subtitle { color:var(--color-muted); margin-top:16px; font-size:13px; }
+.search { display:flex; align-items:flex-end; gap:12px; margin:30px 0 40px; max-width:700px; }
+.search > div { flex:1; min-width:0; }
+.search label { display:block; margin-bottom:7px; font-size:12px; color:var(--color-muted); }
+.search input { width:100%; border:1px solid var(--color-line); border-radius:4px; padding:11px 13px; background:var(--color-surface); }
+.search button { padding:12px 20px; }
+.resultsHeading { display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid var(--color-line); padding-bottom:15px; margin-bottom:24px; }
+.resultsHeading h2 { font-size:15px; font-weight:600; }
+.resultsHeading p { font-size:12px; color:var(--color-muted); }
+.grid { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:22px; padding:0; margin:0; }
+.bookCard { display:flex; height:100%; min-height:220px; padding:18px; gap:18px; background:var(--color-surface); border:1px solid var(--color-line); border-radius:7px; text-decoration:none; transition:border-color 150ms,transform 150ms; }
+.bookCard:hover { border-color:#8c9a83; transform:translateY(-2px); }
+.cover { display:flex; flex-shrink:0; flex-direction:column; width:76px; height:122px; padding:10px 8px; border-left:4px solid #9bac92; background:#dbe2d4; color:#405744; text-align:center; }
+.cover > span { font-size:5px; letter-spacing:1px; }
+.cover b { font:400 40px var(--font-heading); margin:auto; }
+.cover small { font-size:8px; }
+.tone1 { background:#e9dbce; border-color:#be9c7e; color:#78583e; }
+.tone2 { background:#d9e0e4; border-color:#9caeb8; color:#4b6372; }
+.tone3 { background:#e5dfd0; border-color:#b5a681; color:#71633e; }
+.bookInfo { min-width:0; display:flex; flex-direction:column; align-items:flex-start; }
+.bookInfo h3 { font:400 19px/1.25 var(--font-heading); overflow-wrap:anywhere; margin:0 0 9px; }
+.bookInfo p { font-size:12px; color:var(--color-muted); overflow-wrap:anywhere; }
+.bookInfo > span:not(.readMore) { font-size:10px; color:var(--color-muted); margin:9px 0; }
+.readMore { color:var(--color-accent); font-size:11px; padding-top:14px; margin-top:auto; }
+.pagination { display:flex; justify-content:center; align-items:center; gap:20px; margin-top:32px; }
+.pagination > span { font-size:12px; color:var(--color-muted); }
+.sourceNote { font-size:11px; line-height:1.7; color:var(--color-muted); margin-top:28px; }
+.back { display:inline-block; color:var(--color-accent); font-size:12px; margin-bottom:30px; text-decoration:none; }
+.detail { max-width:850px; padding:32px; border:1px solid var(--color-line); border-radius:8px; background:var(--color-surface); }
+.detail h1 { font-size:clamp(30px,4vw,44px); }
+.description { margin-top:30px; }
+.description h2,.subjects h2 { font:400 24px var(--font-heading); margin-bottom:14px; }
+.description p { white-space:pre-line; overflow-wrap:anywhere; line-height:1.85; color:var(--color-muted); }
+.subjects { margin-top:28px; }
+.subjects ul { list-style:none; display:flex; flex-wrap:wrap; gap:8px; padding:0; margin:0; }
+.subjects li { background:#edf0e7; border-radius:4px; padding:5px 9px; color:var(--color-accent); font-size:11px; }
+.sourceLink { display:inline-block; font-size:12px; color:var(--color-accent); margin-top:30px; }
+.detail .back { margin:18px 0 0; }
+@media(max-width:1000px) { .grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+@media(max-width:620px) { .page { padding-top:34px; } .grid { grid-template-columns:1fr; gap:14px; } .bookCard { min-height:170px; } .search { align-items:stretch; flex-direction:column; margin-bottom:30px; } .search button { align-self:flex-start; } .detail { padding:22px; } .pagination { gap:12px; } }
+@media(prefers-reduced-motion:reduce) { .bookCard { transition:none; } }

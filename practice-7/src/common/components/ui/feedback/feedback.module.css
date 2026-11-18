@@ -1,0 +1,34 @@
+.feedback {
+  display: grid;
+  justify-items: start;
+  gap: 12px;
+  padding: 30px 24px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+.error {
+  color: var(--color-danger);
+}
+.spinner {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--color-line);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation: none;
+  }
+}
