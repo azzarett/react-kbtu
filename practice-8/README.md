@@ -14,7 +14,7 @@ npm ci
 npm run dev
 ```
 
-Для локального входа через Firebase задайте параметры своего Firebase Web App в `.env.local` по образцу `.env.example`. Для Email/Password и Google включите соответствующие провайдеры в Firebase Authentication и добавьте домен приложения в Authorized domains. При публикации GitHub Actions передаёт существующие параметры `VITE_FIREBASE_*` на этапе сборки.
+Для локального входа через Firebase задайте параметры своего Firebase Web App в `.env.local` по образцу `.env.example`. Для Email/Password и Google включите соответствующие провайдеры в Firebase Authentication и добавьте домен приложения в Authorized domains. При публикации GitHub Actions подставляет параметры из секретов `PRACTICE8_FIREBASE_*` в переменные сборки `VITE_FIREBASE_*`. Для входа через Google на Pages проект Firebase должен разрешать домен `azzarett.github.io`.
 
 ## Redux Toolkit
 

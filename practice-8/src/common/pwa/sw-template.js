@@ -43,7 +43,9 @@ async function fresh(name, request) {
 }
 async function publicAPI(request) {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), 4500);
+  // A cold search can take longer than a repeat with an offline copy available.
+  const fallback = await fresh(API, request).catch(() => null);
+  const timer = setTimeout(() => controller.abort(), fallback ? 4500 : 20000);
   let response;
   try {
     response = await fetch(request, {signal:controller.signal, credentials:'omit'});
@@ -52,11 +54,10 @@ async function publicAPI(request) {
     await notify('API_LIVE', request.url);
     return response;
   } catch {
-    const cached = await fresh(API, request);
-    if (cached) {
+    if (fallback) {
       await notify('API_CACHED', request.url);
-      const headers = new Headers(cached.headers); headers.set('x-polka-offline', 'true');
-      return new Response(await cached.arrayBuffer(), {headers, status:200});
+      const headers = new Headers(fallback.headers); headers.set('x-polka-offline', 'true');
+      return new Response(await fallback.arrayBuffer(), {headers, status:200});
     }
     await notify('API_UNAVAILABLE', request.url);
     if (response && !response.ok) return response;
