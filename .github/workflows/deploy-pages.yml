@@ -1,4 +1,4 @@
-name: Deploy midterm to GitHub Pages
+name: Deploy coursework to GitHub Pages
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
       - 'practice-3/**'
       - 'practice-4/**'
       - 'practice-7/**'
+      - 'practice-8/**'
       - 'midterm/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
@@ -38,6 +39,7 @@ jobs:
             practice-3/package-lock.json
             practice-4/package-lock.json
             practice-7/package-lock.json
+            practice-8/package-lock.json
             midterm/package-lock.json
       - name: Install
         working-directory: practice-2
@@ -97,13 +99,30 @@ jobs:
           VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID || vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID || vars.VITE_FIREBASE_APP_ID }}
         run: npm run build && npm run test:pwa
+      - name: Install practice 8
+        working-directory: practice-8
+        run: npm ci
+      - name: Verify practice 8
+        working-directory: practice-8
+        run: npm run lint && npm test && npm run test:ui
+      - name: Build practice 8
+        working-directory: practice-8
+        env:
+          VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY || vars.VITE_FIREBASE_API_KEY }}
+          VITE_FIREBASE_AUTH_DOMAIN: ${{ secrets.VITE_FIREBASE_AUTH_DOMAIN || vars.VITE_FIREBASE_AUTH_DOMAIN }}
+          VITE_FIREBASE_PROJECT_ID: ${{ secrets.VITE_FIREBASE_PROJECT_ID || vars.VITE_FIREBASE_PROJECT_ID }}
+          VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET || vars.VITE_FIREBASE_STORAGE_BUCKET }}
+          VITE_FIREBASE_MESSAGING_SENDER_ID: ${{ secrets.VITE_FIREBASE_MESSAGING_SENDER_ID || vars.VITE_FIREBASE_MESSAGING_SENDER_ID }}
+          VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID || vars.VITE_FIREBASE_APP_ID }}
+        run: npm run build && npm run test:pwa
       - name: Assemble Pages site
         run: |
-          mkdir -p _site/practice-7 _site/practice-2 _site/practice-3 _site/practice-4 _site/modterm
+          mkdir -p _site/practice-8 _site/practice-7 _site/practice-2 _site/practice-3 _site/practice-4 _site/modterm
           cp -R midterm/dist/. _site/modterm/
           cp -R practice-2/dist/. _site/practice-2/
           cp -R practice-3/dist/. _site/practice-3/
           cp -R practice-4/dist/. _site/practice-4/
+          cp -R practice-8/dist/. _site/practice-8/
           cp -R practice-7/dist/. _site/practice-7/
           cp -R practice-1 _site/practice-1
           cp -R midterm/dist/. _site/
